@@ -3,8 +3,15 @@ package venecotienda;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//Comentario
+		//Clase principal con los accesos a los menus
+		
+		//Ingreso admin
+		
+		//Ingreso Cliente
+		
+		//Ingreso repartidor
+		
+		//Ingreso para los empleados
 	}
 
 }
