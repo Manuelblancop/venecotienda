@@ -1,5 +1,6 @@
-<h1 style="font-black">Diagrama de la base de datos</h1>
-<img src"https://github.com/user-attachments/assets/5f46ad3f-6f64-455f-9d84-b4275052b758">
-![Base de datos]()
-<h2 style="font-black">Diagrama del codigo</h2>
-<img src"![Diagrama](https://github.com/user-attachments/assets/6d36a9a1-eedb-4933-a158-14da4a0b194e)">
+Diagrama de base de datos
+![Base de datos](https://github.com/user-attachments/assets/d7ec9c07-6f11-445a-b873-840678dc8635)
+Diagrama de codigo
+![Diagrama](https://github.com/user-attachments/assets/88ab7f37-503d-4539-9eaf-adbe4df02e1a)
+
+
