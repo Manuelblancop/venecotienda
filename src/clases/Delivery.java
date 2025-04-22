@@ -1,4 +1,4 @@
-package venecotienda;
+package clases;
 
 public class Delivery extends Pedido{
 	//Extender pedido	

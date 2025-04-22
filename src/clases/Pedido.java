@@ -1,4 +1,4 @@
-package venecotienda;
+package clases;
 
 	//Probablemente extender productos;
 public class Pedido {

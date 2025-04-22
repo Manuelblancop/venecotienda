@@ -1,4 +1,4 @@
-package venecotienda;
+package clases;
 
 public class Repartidor extends Usuario{
 	//Extender Usuario

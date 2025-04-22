@@ -1,4 +1,4 @@
-package venecotienda;
+package clases;
 
 public class Empleado extends Usuario{
 	private int Id = 0;
