@@ -16,6 +16,9 @@ public class Admin extends Usuario{
 		ID = iD;
 	}
 	
+	
+	int numero;
+	int direccion;
 	/////////////Funciones
 	// Iniciar sesión
 	// ver pedidos asignados 
