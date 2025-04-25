@@ -15,9 +15,9 @@ import singleton.Sesion;
 public class Main {
     public static void main(String[] args) {
 
-        // Supongamos que logueamos a un admin
+        //log admin (Prueba)
         Usuario admin = new Usuario("Pedro", "admin01","admin");
-        Sesion.getInstancia().iniciarSesion(admin);
+        Sesion.getInstancia().iniciarSesion(admin);        
         Usuario logueado = Sesion.getInstancia().getUsuarioActual();
         
         if (logueado != null) {
