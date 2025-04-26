@@ -1,14 +1,66 @@
 package clases;
+import javax.swing.JOptionPane;
 
-	//Probablemente extender productos;
 public class Pedido {
-	//lista con productos
-	private String[] metodo_pay = {"Mercado pago", "Credito", "Debito", "Efectivo"};
-	private Double total = 0.0;
-	
-	
-	/////////////Funciones
-	// Personalizar pedidos
-	// Generar recomendaciones
-	// Pagar pedido
+    private int idPedido;
+    private String[] metodo_pay = {"Mercado pago", "Credito", "Debito", "Efectivo"};
+    private Double total = 0.0;
+    private String estado = "Pendiente";
+    private String personalizaciones = "";
+
+    public Pedido(int idPedido, Double total) {
+        this.idPedido = idPedido;
+        this.total = total;
+    }
+
+    public void personalizarPedidos() {
+        String personalizaciones = JOptionPane.showInputDialog("Ingrese las personalizaciones del pedido:");
+        if (personalizaciones == null || personalizaciones.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: Las personalizaciones no pueden estar vacías.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.personalizaciones = personalizaciones;
+        JOptionPane.showMessageDialog(null, "Pedido personalizado: " + personalizaciones);
+    }
+
+    public void generarRecomendaciones() {
+        JOptionPane.showMessageDialog(null, "Recomendación: Agregar bebida al pedido.");
+    }
+
+    public void pagarPedido() {
+        String metodo = JOptionPane.showInputDialog("Ingrese el método de pago (Mercado pago, Credito, Debito, Efectivo):");
+        if (metodo == null || metodo.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: El método de pago no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        for (String m : metodo_pay) {
+            if (m.equalsIgnoreCase(metodo)) {
+                this.estado = "Pagado";
+                JOptionPane.showMessageDialog(null, "Pedido pagado con " + metodo);
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Error: Método de pago no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+   
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

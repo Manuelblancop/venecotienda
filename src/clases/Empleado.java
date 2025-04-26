@@ -1,7 +1,12 @@
 package clases;
 
-public class Empleado extends Usuario{
-	private int Id = 0;
-	private String[] cargo = {"Cargos de los empleados acá"};
-	
+public class Empleado extends Usuario {
+
+    public Empleado(String nombre, String contrasenia) {
+        super(nombre, contrasenia, "empleado");
+    }
+
+    public void actualizarEstadoPedido(Pedido pedido, String nuevoEstado) {
+        pedido.setEstado(nuevoEstado);
+    }
 }

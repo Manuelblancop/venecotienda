@@ -1,51 +1,80 @@
 package clases;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
+
+import singleton.Sesion;
 
 public class Usuario {
-	
-	private String nombre = "";
-	private String pass = "";
-	private String rol = "";
-	private static LinkedList<Usuario> usuarios = new LinkedList<>();
-	
-	public Usuario(String nombre, String pass, String rol) {
-		super();
-		this.nombre = nombre;
-		this.pass = pass;
-		this.rol = rol;
-	}
+    private String nombre = "";
+    private String pass = "";
+    private String rol = "";
+    private static LinkedList<Usuario> usuarios = new LinkedList<>();
 
-	public String getNombre() {
-		return nombre;
-	}
+    public Usuario(String nombre, String pass, String rol) {
+        this.nombre = nombre;
+        this.pass = pass;
+        this.rol = rol;
+        usuarios.add(this);
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public boolean iniciarSesion() {
+        String nombreInput = JOptionPane.showInputDialog(null, "Ingrese su nombre:");
+        String passInput = JOptionPane.showInputDialog(null, "Ingrese su contraseña:");
 
-	public String getPass() {
-		return pass;
-	}
+        
+        if (nombreInput == null || nombreInput.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: El nombre no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (passInput == null || passInput.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: La contraseña no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
+        if (this.nombre.equals(nombreInput) && this.pass.equals(passInput)) {
+            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso. Bienvenido, " + nombre);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Error: Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 
-	public String getRol() {
-		return rol;
-	}
+    public void cerrarSesion() {
+        Sesion.getInstancia().cerrarSesion();
+        JOptionPane.showMessageDialog(null, "Sesión cerrada.");
+    }
 
-	public void setRol(String rol) {
-		this.rol = rol;
-	}
+    
+    public String getNombre() {
+        return nombre;
+    }
 
-	public static LinkedList<Usuario> getUsuarios() {
-		return usuarios;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public static void setUsuarios(LinkedList<Usuario> usuarios) {
-		Usuario.usuarios = usuarios;
-	}
-	
-	
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public static LinkedList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public static void setUsuarios(LinkedList<Usuario> usuarios) {
+        Usuario.usuarios = usuarios;
+    }
 }

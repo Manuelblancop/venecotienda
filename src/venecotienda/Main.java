@@ -1,44 +1,57 @@
 package venecotienda;
-//Librerias
 import javax.swing.JOptionPane;
-//Clases
-import clases.Usuario;
-import clases.Admin;
-//Enums
-import enums.MenuAdmin;
-import enums.MenuCliente;
-import enums.MenuEmpleado;
-import enums.MenuRepartidor;
-//Singleton
+import clases.*;
 import singleton.Sesion;
 
 public class Main {
     public static void main(String[] args) {
+       
+        Admin admin = new Admin("Manu", "admin01", "admin", 1);
+        Cliente cliente = new Cliente("liev", "cliente01", "cliente", 2, 123456789, "Calle sarmiento");
+        Repartidor repartidor = new Repartidor("tomas", "repartidor01", "repartidor", 3, 987654321);
 
-        // Supongamos que logueamos a un admin
-        Usuario admin = new Usuario("Pedro", "admin01","admin");
-        Sesion.getInstancia().iniciarSesion(admin);
-        Usuario logueado = Sesion.getInstancia().getUsuarioActual();
         
-        if (logueado != null) {
-        	JOptionPane.showMessageDialog(null, "Bienvenido, " + logueado.getNombre());
-            String rol = logueado.getRol();
-	            switch (rol) {
-	                case "admin":
-	                	JOptionPane.showOptionDialog(null, "", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, MenuAdmin.values(), MenuAdmin.values()[0]);
-	                    break;
-	                case "cliente":
-	                	JOptionPane.showOptionDialog(null, "", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, MenuCliente.values(), MenuCliente.values()[0]);
-	                    break;
-	                case "empleado":
-	                	JOptionPane.showOptionDialog(null, "", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, MenuEmpleado.values(), MenuEmpleado.values()[0]);
-	                    break;
-	                case "repartidor":
-	                	JOptionPane.showOptionDialog(null, "", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, MenuRepartidor.values(), MenuRepartidor.values()[0]);
-	                    break;
-	                default:
-	                    System.out.println("Error-444"); //Usuario no encontrado
-	            }
+        Admin.productos.add(new Producto(1, "Pizza", 10.99, "Pizza de pepperoni", 50));
+
+       
+        String[] roles = {"admin", "cliente", "repartidor"};
+        String rolSeleccionado = (String) JOptionPane.showInputDialog(null, "Seleccione su rol:", "Inicio de Sesión", JOptionPane.QUESTION_MESSAGE, null, roles, roles[0]);
+
+        if (rolSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Aplicación cerrada.");
+            return;
+        }
+
+        Usuario usuarioLogueado = null;
+        switch (rolSeleccionado) {
+            case "admin":
+                usuarioLogueado = admin;
+                break;
+            case "cliente":
+                usuarioLogueado = cliente;
+                break;
+            case "repartidor":
+                usuarioLogueado = repartidor;
+                break;
+        }
+
+        if (usuarioLogueado != null && usuarioLogueado.iniciarSesion()) {
+            Sesion.getInstancia().iniciarSesion(usuarioLogueado);
+            while (Sesion.getInstancia().haySesionActiva()) {
+                switch (rolSeleccionado) {
+                    case "admin":
+                        admin.verMenu();
+                        break;
+                    case "cliente":
+                        cliente.verMenu();
+                        break;
+                    case "repartidor":
+                        repartidor.verMenu();
+                        break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Cerrando aplicación.");
         }
     }
 }
