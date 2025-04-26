@@ -42,74 +42,53 @@ public class Admin extends Usuario {
     }
 
     public void verEstadoPedido() {
-        String idStr = JOptionPane.showInputDialog("Ingrese el ID del pedido:");
-        if (idStr == null || idStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: El ID no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            int idPedido = Integer.parseInt(idStr);
-            if (idPedido <= 0) {
-                JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+     
+        int idPedido = 1; 
+        JOptionPane.showMessageDialog(null, "Buscando estado del pedido con ID: " + idPedido);
+        for (Pedido pedido : pedidos) {
+            if (pedido.getIdPedido() == idPedido) {
+                JOptionPane.showMessageDialog(null, "Estado del pedido " + idPedido + ": " + pedido.getEstado());
                 return;
             }
-            for (Pedido pedido : pedidos) {
-                if (pedido.getIdPedido() == idPedido) {
-                    JOptionPane.showMessageDialog(null, "Estado del pedido " + idPedido + ": " + pedido.getEstado());
-                    return;
-                }
-            }
-            JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
     }
 
     public void eliminarProducto() {
-        String idStr = JOptionPane.showInputDialog("Ingrese el ID del producto a eliminar:");
-        if (idStr == null || idStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: El ID no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            int idProducto = Integer.parseInt(idStr);
-            if (idProducto <= 0) {
-                JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número positivo.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            productos.removeIf(producto -> producto.getIdProducto() == idProducto);
-            JOptionPane.showMessageDialog(null, "Producto con ID " + idProducto + " eliminado.");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+     
+        int idProducto = 1; 
+        JOptionPane.showMessageDialog(null, "Eliminando producto con ID: " + idProducto);
+        productos.removeIf(producto -> producto.getIdProducto() == idProducto);
+        JOptionPane.showMessageDialog(null, "Producto con ID " + idProducto + " eliminado.");
     }
 
     public void editarPerfil() {
-        String nombre = JOptionPane.showInputDialog("Ingrese su nuevo nombre:");
-        String pass = JOptionPane.showInputDialog("Ingrese su nueva contraseña:");
-        if (nombre == null || nombre.trim().isEmpty() || pass == null || pass.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: Los campos no pueden estar vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        setNombre(nombre);
-        setPass(pass);
-        JOptionPane.showMessageDialog(null, "Perfil actualizado para " + nombre);
+       
+        String nuevoNombre = "AdminActualizado"; 
+        String nuevaPass = "nuevaPass123"; 
+        JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + " y contraseña: " + nuevaPass);
+        setNombre(nuevoNombre);
+        setPass(nuevaPass);
+        JOptionPane.showMessageDialog(null, "Perfil actualizado para " + nuevoNombre);
     }
 
     public void verMenu() {
-        String[] opciones = {"Ver Productos", "Ver Pedidos", "Ver Estado de Pedido", "Eliminar Producto", "Editar Perfil", "Cerrar Sesión"};
-        int seleccion = JOptionPane.showOptionDialog(null, "Menú del Administrador", "Menú", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
-        switch (seleccion) {
-            case 0 -> verProductos();
-            case 1 -> verPedidosAsignados();
-            case 2 -> verEstadoPedido();
-            case 3 -> eliminarProducto();
-            case 4 -> editarPerfil();
-            case 5 -> cerrarSesion();
-        }
+       
+        JOptionPane.showMessageDialog(null, "Menú del Administrador: Este sistema ejecutará acciones predefinidas.");
+        JOptionPane.showMessageDialog(null, "1. Ver Productos");
+        verProductos();
+        JOptionPane.showMessageDialog(null, "2. Ver Pedidos");
+        verPedidosAsignados();
+        JOptionPane.showMessageDialog(null, "3. Ver Estado de Pedido (ID predefinido)");
+        verEstadoPedido();
+        JOptionPane.showMessageDialog(null, "4. Eliminar Producto (ID predefinido)");
+        eliminarProducto();
+        JOptionPane.showMessageDialog(null, "5. Editar Perfil (valores predefinidos)");
+        editarPerfil();
+        JOptionPane.showMessageDialog(null, "6. Cerrar Sesión");
+        cerrarSesion();
     }
 
-    
     public int getID() {
         return ID;
     }

@@ -35,49 +35,27 @@ public class Cliente extends Usuario {
     }
 
     public void hacerPedido() {
-        String totalStr = JOptionPane.showInputDialog("Ingrese el total del pedido:");
-        if (totalStr == null || totalStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: El total no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            double total = Double.parseDouble(totalStr);
-            if (total <= 0) {
-                JOptionPane.showMessageDialog(null, "Error: El total debe ser un número positivo.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            int idPedido = Admin.pedidos.size() + 1; // Generar un ID simple
-            Pedido pedido = new Pedido(idPedido, total);
-            Admin.pedidos.add(pedido);
-            historialPedidos.add(pedido);
-            JOptionPane.showMessageDialog(null, "Pedido realizado con ID: " + idPedido);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: El total debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        
+        double total = 50.0; 
+        JOptionPane.showMessageDialog(null, "Haciendo un pedido con total: " + total);
+        int idPedido = Admin.pedidos.size() + 1; 
+        Pedido pedido = new Pedido(idPedido, total);
+        Admin.pedidos.add(pedido);
+        historialPedidos.add(pedido);
+        JOptionPane.showMessageDialog(null, "Pedido realizado con ID: " + idPedido);
     }
 
     public void verEstadoPedido() {
-        String idStr = JOptionPane.showInputDialog("Ingrese el ID del pedido:");
-        if (idStr == null || idStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: El ID no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            int idPedido = Integer.parseInt(idStr);
-            if (idPedido <= 0) {
-                JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+       
+        int idPedido = 1; // Valor predefinido
+        JOptionPane.showMessageDialog(null, "Buscando estado del pedido con ID: " + idPedido);
+        for (Pedido pedido : historialPedidos) {
+            if (pedido.getIdPedido() == idPedido) {
+                JOptionPane.showMessageDialog(null, "Estado del pedido " + idPedido + ": " + pedido.getEstado());
                 return;
             }
-            for (Pedido pedido : historialPedidos) {
-                if (pedido.getIdPedido() == idPedido) {
-                    JOptionPane.showMessageDialog(null, "Estado del pedido " + idPedido + ": " + pedido.getEstado());
-                    return;
-                }
-            }
-            JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
     }
 
     public void verHistorialPedidos() {
@@ -93,18 +71,20 @@ public class Cliente extends Usuario {
     }
 
     public void verMenu() {
-        String[] opciones = {"Ver Productos", "Hacer Pedido", "Ver Estado de Pedido", "Ver Historial de Pedidos", "Cerrar Sesión"};
-        int seleccion = JOptionPane.showOptionDialog(null, "Menú del Cliente", "Menú", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
-        switch (seleccion) {
-            case 0 -> verProductos();
-            case 1 -> hacerPedido();
-            case 2 -> verEstadoPedido();
-            case 3 -> verHistorialPedidos();
-            case 4 -> cerrarSesion();
-        }
+        
+        JOptionPane.showMessageDialog(null, "Menú del Cliente: Este sistema ejecutará acciones predefinidas.");
+        JOptionPane.showMessageDialog(null, "1. Ver Productos");
+        verProductos();
+        JOptionPane.showMessageDialog(null, "2. Hacer Pedido (total predefinido)");
+        hacerPedido();
+        JOptionPane.showMessageDialog(null, "3. Ver Estado de Pedido (ID predefinido)");
+        verEstadoPedido();
+        JOptionPane.showMessageDialog(null, "4. Ver Historial de Pedidos");
+        verHistorialPedidos();
+        JOptionPane.showMessageDialog(null, "5. Cerrar Sesión");
+        cerrarSesion();
     }
 
-    
     public int getID() {
         return ID;
     }
