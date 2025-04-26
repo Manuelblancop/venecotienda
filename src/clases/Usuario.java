@@ -6,13 +6,13 @@ import singleton.Sesion;
 
 public class Usuario {
     private String nombre = "";
-    private String pass = "";
+    private String contrasenia = "";
     private String rol = "";
     private static LinkedList<Usuario> usuarios = new LinkedList<>();
 
-    public Usuario(String nombre, String pass, String rol) {
+    public Usuario(String nombre, String contrasenia, String rol) {
         this.nombre = nombre;
-        this.pass = pass;
+        this.contrasenia = contrasenia;
         this.rol = rol;
         usuarios.add(this);
     }
@@ -31,7 +31,7 @@ public class Usuario {
             return false;
         }
 
-        if (this.nombre.equals(nombreInput) && this.pass.equals(passInput)) {
+        if (this.nombre.equals(nombreInput) && this.contrasenia.equals(passInput)) {
             JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso. Bienvenido, " + nombre);
             return true;
         } else {
@@ -55,11 +55,11 @@ public class Usuario {
     }
 
     public String getPass() {
-        return pass;
+        return contrasenia;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPass(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public String getRol() {

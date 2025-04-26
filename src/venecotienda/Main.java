@@ -11,10 +11,10 @@ public class Main {
         Repartidor repartidor = new Repartidor("Tomas", "repartidor01", "repartidor", 3, 987654321);
 
         
-        Admin.productos.add(new Producto(1, "Pizza", 10.99, "Pizza de pepperoni", 50));
+        Admin.productos.add(new Producto(1, "Arepa", 1000, "Arepa con quesoisi", 50));
 
        
-        JOptionPane.showMessageDialog(null, "Bienvenido. Este sistema solo permite iniciar sesión como administrador por ahora.");
+        JOptionPane.showMessageDialog(null, "Bienvenido a nuestro restaurante");
 
        
         String rolSeleccionado = "admin"; 
@@ -50,7 +50,7 @@ public class Main {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Cerrando aplicación.");
+            JOptionPane.showMessageDialog(null, "Ingresa nuevamente bro.");
         }
     }
 }
