@@ -5,23 +5,22 @@ import singleton.Sesion;
 
 public class Main {
     public static void main(String[] args) {
-       
+        
         Admin admin = new Admin("Manu", "admin01", "admin", 1);
-        Cliente cliente = new Cliente("liev", "cliente01", "cliente", 2, 123456789, "Calle sarmiento");
-        Repartidor repartidor = new Repartidor("tomas", "repartidor01", "repartidor", 3, 987654321);
+        Cliente cliente = new Cliente("Liev", "cliente01", "cliente", 2, 123456789, "Calle Sarmiento");
+        Repartidor repartidor = new Repartidor("Tomas", "repartidor01", "repartidor", 3, 987654321);
 
         
         Admin.productos.add(new Producto(1, "Pizza", 10.99, "Pizza de pepperoni", 50));
 
        
-        String[] roles = {"admin", "cliente", "repartidor"};
-        String rolSeleccionado = (String) JOptionPane.showInputDialog(null, "Seleccione su rol:", "Inicio de Sesión", JOptionPane.QUESTION_MESSAGE, null, roles, roles[0]);
+        JOptionPane.showMessageDialog(null, "Bienvenido. Este sistema solo permite iniciar sesión como administrador por ahora.");
 
-        if (rolSeleccionado == null) {
-            JOptionPane.showMessageDialog(null, "Aplicación cerrada.");
-            return;
-        }
+       
+        String rolSeleccionado = "admin"; 
+        JOptionPane.showMessageDialog(null, "Rol seleccionado: " + rolSeleccionado);
 
+        
         Usuario usuarioLogueado = null;
         switch (rolSeleccionado) {
             case "admin":
