@@ -14,11 +14,9 @@ public class Pedido {
     }
 
     public void personalizarPedidos() {
-        String personalizaciones = JOptionPane.showInputDialog("Ingrese las personalizaciones del pedido:");
-        if (personalizaciones == null || personalizaciones.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: Las personalizaciones no pueden estar vacías.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
+        String personalizaciones = "Sin queso extra"; 
+        JOptionPane.showMessageDialog(null, "Personalizando pedido con: " + personalizaciones);
         this.personalizaciones = personalizaciones;
         JOptionPane.showMessageDialog(null, "Pedido personalizado: " + personalizaciones);
     }
@@ -28,11 +26,9 @@ public class Pedido {
     }
 
     public void pagarPedido() {
-        String metodo = JOptionPane.showInputDialog("Ingrese el método de pago (Mercado pago, Credito, Debito, Efectivo):");
-        if (metodo == null || metodo.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: El método de pago no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
+        String metodo = "Efectivo"; 
+        JOptionPane.showMessageDialog(null, "Pagando pedido con método: " + metodo);
         for (String m : metodo_pay) {
             if (m.equalsIgnoreCase(metodo)) {
                 this.estado = "Pagado";
@@ -40,10 +36,9 @@ public class Pedido {
                 return;
             }
         }
-        JOptionPane.showMessageDialog(null, "Error: Método de pago no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error: Método de pago no válido.");
     }
 
-   
     public int getIdPedido() {
         return idPedido;
     }

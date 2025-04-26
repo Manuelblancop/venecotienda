@@ -44,27 +44,16 @@ public class Repartidor extends Usuario {
     }
 
     public void verEstadoPedido() {
-        String idStr = JOptionPane.showInputDialog("Ingrese el ID del pedido:");
-        if (idStr == null || idStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: El ID no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            int idPedido = Integer.parseInt(idStr);
-            if (idPedido <= 0) {
-                JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+       
+        int idPedido = 1; 
+        JOptionPane.showMessageDialog(null, "Buscando estado del pedido con ID: " + idPedido);
+        for (Pedido pedido : pedidosAsignados) {
+            if (pedido.getIdPedido() == idPedido) {
+                JOptionPane.showMessageDialog(null, "Estado del pedido " + idPedido + ": " + pedido.getEstado());
                 return;
             }
-            for (Pedido pedido : pedidosAsignados) {
-                if (pedido.getIdPedido() == idPedido) {
-                    JOptionPane.showMessageDialog(null, "Estado del pedido " + idPedido + ": " + pedido.getEstado());
-                    return;
-                }
-            }
-            JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: El ID debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
     }
 
     public void verMapa() {
@@ -72,42 +61,34 @@ public class Repartidor extends Usuario {
     }
 
     public void editarPerfil() {
-        String nombre = JOptionPane.showInputDialog("Ingrese su nuevo nombre:");
-        String pass = JOptionPane.showInputDialog("Ingrese su nueva contraseña:");
-        String numCellStr = JOptionPane.showInputDialog("Ingrese su nuevo número de celular:");
-        if (nombre == null || nombre.trim().isEmpty() || pass == null || pass.trim().isEmpty() || numCellStr == null || numCellStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Error: Los campos no pueden estar vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            int numCell = Integer.parseInt(numCellStr);
-            if (numCell <= 0) {
-                JOptionPane.showMessageDialog(null, "Error: El número de celular debe ser positivo.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            setNombre(nombre);
-            setPass(pass);
-            this.numCell = numCell;
-            JOptionPane.showMessageDialog(null, "Perfil actualizado para " + nombre);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: El número de celular debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        
+        String nuevoNombre = "RepartidorActualizado"; 
+        String nuevaPass = "nuevaPass123"; 
+        int nuevoNumCell = 555555555; // 
+        JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + ", contraseña: " + nuevaPass + ", número de celular: " + nuevoNumCell);
+        setNombre(nuevoNombre);
+        setPass(nuevaPass);
+        this.numCell = nuevoNumCell;
+        JOptionPane.showMessageDialog(null, "Perfil actualizado para " + nuevoNombre);
     }
 
     public void verMenu() {
-        String[] opciones = {"Ver Pedidos Asignados", "Ver Historial de Pedidos", "Ver Estado de Pedido", "Ver Mapa", "Editar Perfil", "Cerrar Sesión"};
-        int seleccion = JOptionPane.showOptionDialog(null, "Menú del Repartidor", "Menú", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
-        switch (seleccion) {
-            case 0 -> verPedidosAsignados();
-            case 1 -> verHistorialPedidos();
-            case 2 -> verEstadoPedido();
-            case 3 -> verMapa();
-            case 4 -> editarPerfil();
-            case 5 -> cerrarSesion();
-        }
+        
+        JOptionPane.showMessageDialog(null, "Menú del Repartidor: Este sistema ejecutará acciones predefinidas.");
+        JOptionPane.showMessageDialog(null, "1. Ver Pedidos Asignados");
+        verPedidosAsignados();
+        JOptionPane.showMessageDialog(null, "2. Ver Historial de Pedidos");
+        verHistorialPedidos();
+        JOptionPane.showMessageDialog(null, "3. Ver Estado de Pedido (ID predefinido)");
+        verEstadoPedido();
+        JOptionPane.showMessageDialog(null, "4. Ver Mapa");
+        verMapa();
+        JOptionPane.showMessageDialog(null, "5. Editar Perfil (valores predefinidos)");
+        editarPerfil();
+        JOptionPane.showMessageDialog(null, "6. Cerrar Sesión");
+        cerrarSesion();
     }
 
-   
     public int getID() {
         return ID;
     }
