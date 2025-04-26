@@ -9,8 +9,8 @@ public class Repartidor extends Usuario {
     private List<Pedido> pedidosAsignados = new ArrayList<>();
     private List<Pedido> historialPedidos = new ArrayList<>();
 
-    public Repartidor(String nombre, String pass, String rol, int iD, int numCell) {
-        super(nombre, pass, rol);
+    public Repartidor(String nombre, String contrasenia, String rol, int iD, int numCell) {
+        super(nombre, contrasenia, rol);
         this.ID = iD;
         this.numCell = numCell;
     }
@@ -63,11 +63,11 @@ public class Repartidor extends Usuario {
     public void editarPerfil() {
         
         String nuevoNombre = "RepartidorActualizado"; 
-        String nuevaPass = "nuevaPass123"; 
+        String nuevacontrasenia = "nuevaPass123"; 
         int nuevoNumCell = 555555555; // 
-        JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + ", contraseña: " + nuevaPass + ", número de celular: " + nuevoNumCell);
+        JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + ", contraseña: " + nuevacontrasenia + ", número de celular: " + nuevoNumCell);
         setNombre(nuevoNombre);
-        setPass(nuevaPass);
+        setPass(nuevacontrasenia);
         this.numCell = nuevoNumCell;
         JOptionPane.showMessageDialog(null, "Perfil actualizado para " + nuevoNombre);
     }

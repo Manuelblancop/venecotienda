@@ -36,7 +36,7 @@ public class Cliente extends Usuario {
 
     public void hacerPedido() {
         
-        double total = 50.0; 
+        double total = 10000; 
         JOptionPane.showMessageDialog(null, "Haciendo un pedido con total: " + total);
         int idPedido = Admin.pedidos.size() + 1; 
         Pedido pedido = new Pedido(idPedido, total);

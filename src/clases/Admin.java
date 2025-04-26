@@ -65,25 +65,26 @@ public class Admin extends Usuario {
     public void editarPerfil() {
        
         String nuevoNombre = "AdminActualizado"; 
-        String nuevaPass = "nuevaPass123"; 
-        JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + " y contraseña: " + nuevaPass);
+         String nuevacontrasenia123 = null;
+		String nuevacontrasenia = nuevacontrasenia123;
+		JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + " y contrasenia: " + nuevacontrasenia);
         setNombre(nuevoNombre);
-        setPass(nuevaPass);
+        setPass(contrasenia);
         JOptionPane.showMessageDialog(null, "Perfil actualizado para " + nuevoNombre);
     }
 
     public void verMenu() {
        
-        JOptionPane.showMessageDialog(null, "Menú del Administrador: Este sistema ejecutará acciones predefinidas.");
+        JOptionPane.showMessageDialog(null, "Menú del Administrador.");
         JOptionPane.showMessageDialog(null, "1. Ver Productos");
         verProductos();
         JOptionPane.showMessageDialog(null, "2. Ver Pedidos");
         verPedidosAsignados();
-        JOptionPane.showMessageDialog(null, "3. Ver Estado de Pedido (ID predefinido)");
+        JOptionPane.showMessageDialog(null, "3. Ver Estado de Pedido");
         verEstadoPedido();
-        JOptionPane.showMessageDialog(null, "4. Eliminar Producto (ID predefinido)");
+        JOptionPane.showMessageDialog(null, "4. Eliminar Producto)");
         eliminarProducto();
-        JOptionPane.showMessageDialog(null, "5. Editar Perfil (valores predefinidos)");
+        JOptionPane.showMessageDialog(null, "5. Editar Perfil");
         editarPerfil();
         JOptionPane.showMessageDialog(null, "6. Cerrar Sesión");
         cerrarSesion();

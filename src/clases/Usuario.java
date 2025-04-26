@@ -6,7 +6,7 @@ import singleton.Sesion;
 
 public class Usuario {
     private String nombre = "";
-    private String contrasenia = "";
+    protected String contrasenia = "";
     private String rol = "";
     private static LinkedList<Usuario> usuarios = new LinkedList<>();
 
