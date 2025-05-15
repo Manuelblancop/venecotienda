@@ -8,6 +8,7 @@ import enums.MenuAdmin;
 import enums.MenuCliente;
 import enums.MenuEmpleado;
 import enums.MenuRepartidor;
+import singleton.Conexion;
 //Singleton
 import singleton.Sesion;
 //Base de datos
@@ -19,13 +20,12 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/venecotienda_db";
-        String user = "root";
-        String password = "";
-        //Conexión con la base de datos
+//        String url = "jdbc:mysql://localhost:3306/venecodb";
+//        String user = "root";
+//        String password = "";
+//        //Conexión con la base de datos
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conexion = DriverManager.getConnection(url, user, password);
+            Connection conexion = Conexion.getInstance().getConnection();
             //Variables
             String usuarioInput = JOptionPane.showInputDialog("Usuario:");
             String passwordInput = JOptionPane.showInputDialog("Contraseña:");
