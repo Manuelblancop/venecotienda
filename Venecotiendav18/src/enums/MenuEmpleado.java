@@ -1,5 +1,4 @@
 package enums;
-
 public enum MenuEmpleado {
-	opcion1, opcion2,
+    VER_TAREAS, REGISTRAR_VENTAS, CERRAR_SESION
 }

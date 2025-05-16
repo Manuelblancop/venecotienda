@@ -1,4 +1,4 @@
 package enums;
 public enum MenuCliente {
-	opcion1, opcion2,
+    VER_PRODUCTOS, HACER_PEDIDO, VER_ESTADO, VER_HISTORIAL, CERRAR_SESION
 }

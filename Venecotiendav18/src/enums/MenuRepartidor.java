@@ -1,4 +1,4 @@
 package enums;
 public enum MenuRepartidor {
-	opcion1, opcion2,
+    VER_PEDIDOS, VER_HISTORIAL, VER_ESTADO, VER_MAPA, EDITAR_PERFIL, CERRAR_SESION
 }
