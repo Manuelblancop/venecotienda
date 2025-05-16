@@ -67,7 +67,7 @@ public class Main {
                         JOptionPane.showMessageDialog(null, "Rol no identificado.");
                 }
             } else {
-            	//Atajar el error por falta de constraseña o usuario
+            	
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
             }
             	//Ciero conexion acá;)))))))))
