@@ -66,8 +66,7 @@ public class Admin extends Usuario {
     }
 
     public void verEstadoPedidos() {
-        int idPedido = 1; // Valor predefinido
-        JOptionPane.showMessageDialog(null, "Buscando estado del pedido con ID: " + idPedido);
+        int idPedido = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del pedido:"));
         try {
             Connection conexion = Conexion.getInstance().getConnection();
             String query = "SELECT productos FROM pedido WHERE id_pedido = ?";
@@ -81,12 +80,13 @@ public class Admin extends Usuario {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al buscar pedido: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID válido.");
         }
     }
 
     public void eliminarProducto() {
-        int idProducto = 1; // Valor predefinido
-        JOptionPane.showMessageDialog(null, "Eliminando producto con ID: " + idProducto);
+        int idProducto = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del producto a eliminar:"));
         try {
             Connection conexion = Conexion.getInstance().getConnection();
             String query = "DELETE FROM producto WHERE id_producto = ?";
@@ -100,43 +100,66 @@ public class Admin extends Usuario {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar producto: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID válido.");
         }
     }
 
     public void editarPerfil() {
-        String nuevoNombre = "AdminActualizado";
-        String nuevaPass = "nuevaPass123";
-        JOptionPane.showMessageDialog(null, "Actualizando perfil con nombre: " + nuevoNombre + ", contraseña: " + nuevaPass);
-        try {
-            Connection conexion = Conexion.getInstance().getConnection();
-            String query = "UPDATE usuario SET nombre_usuario = ?, password = ? WHERE id_usuario = ?";
-            PreparedStatement stmt = conexion.prepareStatement(query);
-            stmt.setString(1, nuevoNombre);
-            stmt.setString(2, nuevaPass);
-            stmt.setInt(3, getIdUsuario());
-            stmt.executeUpdate();
-            setNombre(nuevoNombre);
-            setPass(nuevaPass);
-            JOptionPane.showMessageDialog(null, "Perfil actualizado.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar perfil: " + e.getMessage());
+        String nuevoNombre = JOptionPane.showInputDialog(null, "Nuevo nombre:");
+        String nuevaPass = JOptionPane.showInputDialog(null, "Nueva contraseña:");
+        if (nuevoNombre != null && nuevaPass != null && !nuevoNombre.isEmpty() && !nuevaPass.isEmpty()) {
+            try {
+                Connection conexion = Conexion.getInstance().getConnection();
+                String query = "UPDATE usuario SET nombre_usuario = ?, password = ? WHERE id_usuario = ?";
+                PreparedStatement stmt = conexion.prepareStatement(query);
+                stmt.setString(1, nuevoNombre);
+                stmt.setString(2, nuevaPass);
+                stmt.setInt(3, getIdUsuario());
+                stmt.executeUpdate();
+                setNombre(nuevoNombre);
+                setPass(nuevaPass);
+                JOptionPane.showMessageDialog(null, "Perfil actualizado.");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar perfil: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nombre y contraseña no pueden estar vacíos.");
         }
     }
 
     public void verMenu() {
-        JOptionPane.showMessageDialog(null, "Menú del Admin: Ejecutando acciones predefinidas.");
-        JOptionPane.showMessageDialog(null, "1. Ver Pedidos Asignados");
-        verPedidosAsignados();
-        JOptionPane.showMessageDialog(null, "2. Ver Productos");
-        verProductos();
-        JOptionPane.showMessageDialog(null, "3. Ver Estado de Pedidos");
-        verEstadoPedidos();
-        JOptionPane.showMessageDialog(null, "4. Eliminar Producto");
-        eliminarProducto();
-        JOptionPane.showMessageDialog(null, "5. Editar Perfil");
-        editarPerfil();
-        JOptionPane.showMessageDialog(null, "6. Cerrar Sesión");
-        cerrarSesion();
+        String[] opciones = {"Ver Pedidos Asignados", "Ver Productos", "Ver Estado de Pedidos", "Eliminar Producto", "Editar Perfil", "Cerrar Sesión"};
+        int seleccion;
+        do {
+            seleccion = JOptionPane.showOptionDialog(null, "Menú del Admin", "Menú", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]);
+            switch (seleccion) {
+                case 0:
+                    verPedidosAsignados();
+                    break;
+                case 1:
+                    verProductos();
+                    break;
+                case 2:
+                    verEstadoPedidos();
+                    break;
+                case 3:
+                    eliminarProducto();
+                    break;
+                case 4:
+                    editarPerfil();
+                    break;
+                case 5:
+                    cerrarSesion();
+                    JOptionPane.showMessageDialog(null, "Sesión cerrada. ¡Hasta luego!");
+                    break;
+                default:
+                    if (seleccion != JOptionPane.CLOSED_OPTION) {
+                        JOptionPane.showMessageDialog(null, "Opción no válida. Por favor, seleccione una opción.");
+                    }
+                    break;
+            }
+        } while (seleccion != 5 && seleccion != JOptionPane.CLOSED_OPTION);
     }
 
     public int getID() { return ID; }
