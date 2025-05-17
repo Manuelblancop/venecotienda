@@ -30,8 +30,8 @@ public class Main {
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcionesInicio, opcionesInicio[0]);
 
             if (opcionInicio == 0) {
-                String usuarioInput = JOptionPane.showInputDialog("Usuario:");
-                String passwordInput = JOptionPane.showInputDialog("Contraseña:");
+                String usuarioInput = JOptionPane.showInputDialog(null, "Usuario:");
+                String passwordInput = JOptionPane.showInputDialog(null, "Contraseña:");
                 if (usuarioInput != null && passwordInput != null) {
                     String query = "SELECT * FROM usuario WHERE nombre_usuario = ? AND password = ?";
                     PreparedStatement stmt = conexion.prepareStatement(query);
@@ -64,9 +64,9 @@ public class Main {
                     }
                 }
             } else if (opcionInicio == 1) {
-                String nombre = JOptionPane.showInputDialog("Ingrese su nombre de usuario:");
-                String password = JOptionPane.showInputDialog("Ingrese su contraseña:");
-                String rol = JOptionPane.showInputDialog("Ingrese su rol (admin/cliente/empleado/repartidor):");
+                String nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre de usuario:");
+                String password = JOptionPane.showInputDialog(null, "Ingrese su contraseña:");
+                String rol = JOptionPane.showInputDialog(null, "Ingrese su rol (admin/cliente/empleado/repartidor):");
                 if (nombre != null && password != null && rol != null) {
                     registrarUsuario(conexion, nombre, password, rol);
                 }
@@ -74,10 +74,8 @@ public class Main {
 
             conexion.close();
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al interactuar con la base de datos: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
         }
     }
@@ -117,8 +115,8 @@ public class Main {
                 tablaRelacionada = "admin";
                 break;
             case "cliente":
-                String direccion = JOptionPane.showInputDialog("Ingrese su dirección:");
-                int numCel = Integer.parseInt(JOptionPane.showInputDialog("Ingrese su número de celular:"));
+                String direccion = JOptionPane.showInputDialog(null, "Ingrese su dirección:");
+                int numCel = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese su número de celular:"));
                 tablaRelacionada = "cliente";
                 String queryCliente = "INSERT INTO cliente (nombre, direccion, num_cel, fk_usuario) VALUES (?, ?, ?, ?)";
                 PreparedStatement stmtCliente = conexion.prepareStatement(queryCliente);
