@@ -1,4 +1,5 @@
 package clases;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,8 @@ public class Cliente extends Usuario {
         this.direccion = direccion;
     }
 
-    public void verProductos() {
+    public List<Productos> verProductos() {
+        List<Productos> productos = new ArrayList<>();
         try {
             Connection conexion = Conexion.getInstance().getConnection();
             String query = "SELECT id_producto, nombre, descripcion, precio FROM producto";
@@ -30,11 +32,15 @@ public class Cliente extends Usuario {
             boolean hayProductos = false;
             while (rs.next()) {
                 hayProductos = true;
-                sb.append("ID: ").append(rs.getInt("id_producto"))
-                  .append(", Nombre: ").append(rs.getString("nombre"))
-                  .append(", Descripción: ").append(rs.getString("descripcion"))
-                  .append(", Precio: $").append(rs.getDouble("precio"))
-                  .append("\n");
+                Productos producto = new Productos(
+                    rs.getInt("id_producto"),
+                    rs.getString("nombre"),
+                    rs.getString("descripcion"),
+                    rs.getDouble("precio"),
+                    new String[]{""}
+                );
+                productos.add(producto);
+                sb.append(producto.toString()).append("\n");
             }
             if (hayProductos) {
                 JOptionPane.showMessageDialog(null, sb.toString());
@@ -44,22 +50,75 @@ public class Cliente extends Usuario {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al cargar productos: " + e.getMessage());
         }
+        return productos;
     }
 
     public void hacerPedido() {
-        double total = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el total del pedido:"));
+        // Mostrar productos disponibles y obtener la lista
+        List<Productos> productosDisponibles = verProductos();
+        if (productosDisponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay productos disponibles para hacer un pedido.");
+            return;
+        }
+
+        // Permitir al usuario seleccionar productos
+        List<Productos> productosSeleccionados = new ArrayList<>();
+        double total = 0.0;
+        StringBuilder resumenProductos = new StringBuilder();
+        boolean continuarSeleccionando = true;
+
+        while (continuarSeleccionando) {
+            String inputId = JOptionPane.showInputDialog(null, "Ingrese el ID del producto a agregar (o '0' para terminar):");
+            try {
+                int idProducto = Integer.parseInt(inputId);
+                if (idProducto == 0) {
+                    continuarSeleccionando = false;
+                    continue;
+                }
+
+                // Buscar el producto seleccionado
+                Productos productoSeleccionado = null;
+                for (Productos p : productosDisponibles) {
+                    if (p.getID() == idProducto) {
+                        productoSeleccionado = p;
+                        break;
+                    }
+                }
+
+                if (productoSeleccionado != null) {
+                    productosSeleccionados.add(productoSeleccionado);
+                    total += productoSeleccionado.getPrecio();
+                    resumenProductos.append(productoSeleccionado.getNombre()).append(", ");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Producto con ID " + idProducto + " no encontrado.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID válido.");
+            }
+        }
+
+        // Verificar si se seleccionaron productos
+        if (productosSeleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se seleccionaron productos. Pedido cancelado.");
+            return;
+        }
+
+        // Quitar la última coma y espacio del resumen
+        String productosString = resumenProductos.length() > 2 ? 
+                                resumenProductos.substring(0, resumenProductos.length() - 2) : 
+                                resumenProductos.toString();
+
+        // Registrar el pedido en la base de datos
         try {
             Connection conexion = Conexion.getInstance().getConnection();
             String query = "INSERT INTO pedido (productos, fk_met_pago, fk_cliente) VALUES (?, 1, ?)";
             PreparedStatement stmt = conexion.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, "Producto de prueba - Total: " + total);
+            stmt.setString(1, productosString + " - Total: $" + String.format("%.2f", total));
             stmt.setInt(2, ID);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Pedido realizado con éxito. Total: $" + total);
+            JOptionPane.showMessageDialog(null, "Pedido realizado con éxito.\nProductos: " + productosString + "\nTotal: $" + String.format("%.2f", total));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al hacer pedido: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido.");
         }
     }
 

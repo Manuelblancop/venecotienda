@@ -1,4 +1,5 @@
 package clases;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +14,10 @@ public class Productos {
     private Double precio = 0.0;
     private String[] categoria = {"Comida"};
 
+    public Productos() {}
+
     public Productos(int iD, String nombre, String descripcion, Double precio, String[] categoria) {
-        ID = iD;
+        this.ID = iD;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -29,11 +32,16 @@ public class Productos {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Productos(rs.getInt("id_producto"), rs.getString("nombre"),
-                        rs.getString("descripcion"), rs.getDouble("precio"), new String[]{""});
+                return new Productos(
+                    rs.getInt("id_producto"),
+                    rs.getString("nombre"),
+                    rs.getString("descripcion"),
+                    rs.getDouble("precio"),
+                    new String[]{""}
+                );
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al buscar producto.");
+            JOptionPane.showMessageDialog(null, "Error al buscar producto: " + e.getMessage());
         }
         return null;
     }
@@ -46,12 +54,18 @@ public class Productos {
             stmt.setString(1, categoria);
             ResultSet rs = stmt.executeQuery();
             StringBuilder sb = new StringBuilder("Productos en " + categoria + ":\n");
+            boolean hayProductos = false;
             while (rs.next()) {
+                hayProductos = true;
                 sb.append(rs.getString("nombre")).append("\n");
             }
-            JOptionPane.showMessageDialog(null, sb.toString());
+            if (hayProductos) {
+                JOptionPane.showMessageDialog(null, sb.toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay productos en la categoría " + categoria);
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al filtrar.");
+            JOptionPane.showMessageDialog(null, "Error al filtrar: " + e.getMessage());
         }
     }
 
@@ -60,10 +74,15 @@ public class Productos {
     public void setID(int iD) { ID = iD; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getDescripccion() { return descripcion; }
-    public void setDescripccion(String descripcion) { this.descripcion = descripcion; }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public Double getPrecio() { return precio; }
     public void setPrecio(Double precio) { this.precio = precio; }
     public String[] getCategoria() { return categoria; }
     public void setCategoria(String[] categoria) { this.categoria = categoria; }
+
+    @Override
+    public String toString() {
+        return "ID: " + ID + ", Nombre: " + nombre + ", Descripción: " + descripcion + ", Precio: $" + precio;
+    }
 }
